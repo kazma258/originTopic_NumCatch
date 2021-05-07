@@ -106,8 +106,8 @@ if __name__ == '__main__':
     #     count += 1
 
     # draw a bounding box arounded the detected barcode and display the image
-    cv2.imshow("Image", img)
-    cv2.imwrite("contoursImage2.jpg", img)
+    # cv2.imshow("Image", img)
+    # cv2.imwrite("contoursImage2.jpg", img)
 
     txt_file = open('./contours.txt', 'w')
     for i in range(len(cnts)):
