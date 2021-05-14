@@ -19,7 +19,7 @@ def show_photo(win_name, img):
     cv2.resizeWindow(win_name, 554, 739)
     cv2.imshow(win_name, img)
 
-def imgtreat(img):
+def imgq(img):
     # 轉灰度圖
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # 侵蝕膨脹
@@ -27,7 +27,11 @@ def imgtreat(img):
     img = cv2.erode(img, kernel)
     img = cv2.dilate(img, kernel)
     # 高斯濾波
-    img = cv2.GaussianBlur(img, (11,11), 0)
+    img = cv2.GaussianBlur(img, (7,7), 0)
+    return img
+
+def imgtreat(img):
+    img = imgq(img)
     # canny邊緣檢測
     img = cv2.Canny(img, 100, 300)
     # 閥值分割
@@ -39,8 +43,8 @@ def imgtreat(img):
     return cnts
 
 if __name__ == '__main__':
-    img = cv2.imread(r"./Testdata/testmodle3.jpg")
-    img = greenmask(img)
+    img = cv2.imread(r"./Testdata/testmodle2.jpg")
+    #img = greenmask(img)
     show_photo('mask', img)
     cnts = imgtreat(img)
     txt_file = open('./contours.txt', 'w')
