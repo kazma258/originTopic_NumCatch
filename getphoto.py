@@ -23,11 +23,11 @@ def imgq(img):
     # 轉灰度圖
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # 侵蝕膨脹
-    kernel = np.ones((11,11), np.uint8)
+    kernel = np.ones((5,5), np.uint8)
     img = cv2.erode(img, kernel)
     img = cv2.dilate(img, kernel)
     # 高斯濾波
-    img = cv2.GaussianBlur(img, (7,7), 0)
+    img = cv2.GaussianBlur(img, (3,3), 0)
     return img
 
 def imgtreat(img):
@@ -44,15 +44,15 @@ def imgtreat(img):
 
 if __name__ == '__main__':
     img = cv2.imread(r"./Testdata/testmodle2.jpg")
-    #img = greenmask(img)
-    show_photo('mask', img)
+    # img = greenmask(img)
+    # show_photo('mask', img)
     cnts = imgtreat(img)
     txt_file = open('./contours.txt', 'w')
     for i in range(len(cnts)):
         cnt = cnts[i]
         x, y, w, h = cv2.boundingRect(cnt)
         img = cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
-        txt_file.write('{}: [{},{}  {},{}  {},{}  {},{}]\n'.format(
+        txt_file.write('{:0>2d}: [{},{}  {},{}  {},{}  {},{}]\n'.format(
             i+1, x, y, x, y+h, x+w, y, x+w, y+h))
 
     cv2.imwrite('./rectangle.jpg', img)
