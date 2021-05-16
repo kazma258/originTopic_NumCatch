@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 from numpy.core.fromnumeric import compress
-import Comparison
 
 
 def greenmask(image):
@@ -28,22 +27,22 @@ def imgq(img):
     img = cv2.dilate(img, kernel)
     # 高斯濾波
     img = cv2.GaussianBlur(img, (3,3), 0)
+    # 二值化
+    ret, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
     return img
 
 def imgtreat(img):
     img = imgq(img)
     # canny邊緣檢測
     img = cv2.Canny(img, 100, 300)
-    # 閥值分割
-    ret, binary = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
     # 尋找輪廓
-    (cnts, _) = cv2.findContours(binary.copy(),
+    (cnts, _) = cv2.findContours(img.copy(),
         cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     # print(len(cnts))
     return cnts
 
 if __name__ == '__main__':
-    img = cv2.imread(r"./Testdata/testmodle2.jpg")
+    img = cv2.imread(r"./Testdata/testmodle4.png")
     # img = greenmask(img)
     # show_photo('mask', img)
     cnts = imgtreat(img)

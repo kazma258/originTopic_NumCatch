@@ -22,10 +22,10 @@ def crop(pos):
     for file in filelist:
         os.remove(r'./Numdata/'+file)
     for i in range(len(pos)):
-        x = int(pos[i][0])
-        y = int(pos[i][1])
-        w = int(pos[i][6])
-        h = int(pos[i][7])
+        x = int(pos[i][0])+10
+        y = int(pos[i][1])+10
+        w = int(pos[i][6])-10
+        h = int(pos[i][7])-10
         print('{} {} {} {}'.format(x, y, w, h))
         crop_img = img[y:h, x:w]
         write_name = r'./Numdata/' + str(x)+','+str(y)+'.jpg'
