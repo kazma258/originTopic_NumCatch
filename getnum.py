@@ -39,13 +39,6 @@ def write_numfile():
     cv2.waitKey()
     cv2.destroyAllWindows()
 
-def lenl(var):
-    return{
-        0 : map[i].x,
-        1 : map[i].y,
-        2 : map[i].num
-    }.get(var, 'error')
-
 class num_Map:
     def __init__(self, x, y, num):
         self.x = x
@@ -58,14 +51,18 @@ if __name__ == "__main__":
     data = f.read().splitlines()
     for i in range(len(data)):
         data[i] = data[i].split(' ')
-
-    map = [num_Map(0,0,0)] * 11
     for i in range(len(data)):
         for n in range(len(data[i])):
-            lenl[n] = data[i][n]
-            # if(n is 0):
-            #     map[i].x = data[i][n]
-            # elif(n is 1): map[i].y = data[i][n]
-        print('{} {} {}'.format(map[i].x, map[i].y, map[i].num))
+            data[i][n] = int(data[i][n])
+
+    count = 0
+    for i in range(len(data)):
+        if(i == len(data)-1):
+            data[i][0] = count
+        elif(abs(data[i][0] - data[i+1][0]) <= 50):
+            data[i][0] = count
+        else: 
+            data[i][0] = count
+            count+=1
+        print(data[i])
     
-    os.system('pause')
