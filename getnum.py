@@ -1,4 +1,6 @@
 #3辨識圖片的數字
+from re import T
+from tempfile import tempdir
 import cv2
 from numpy import imag
 import pytesseract
@@ -44,11 +46,10 @@ class num_Map:
         self.x = x
         self.y = y
         self.num = num
-
-if __name__ == "__main__":
-    write_numfile()
+def final_result():
     f = open(r'./result.txt')
     data = f.read().splitlines()
+    f.close()
     for i in range(len(data)):
         data[i] = data[i].split(' ')
     for i in range(len(data)):
@@ -64,5 +65,41 @@ if __name__ == "__main__":
         else: 
             data[i][0] = count
             count+=1
-        print(data[i])
-    
+        # print(data[i])
+
+    dx_point = 0
+    i = [0]*2
+    final_out = []
+    while (i[1] <= len(data)):
+        try:
+            if(data[i[1]][0] == dx_point):
+                i[1]+=1
+            elif(data[i[1]][0] != dx_point):
+                temp = data[i[0] : i[1]]
+                temp.sort(key=lambda x:x[1])
+                for temp_c in range(len(temp)):
+                    temp[temp_c][1] = temp_c
+                final_out.append(temp)
+                # print('{} {} {}'.format(dx_point, i, temp))
+                i[0]=i[1]
+                i[1]+=1
+                dx_point+=1
+        except:
+            temp = data[i[0] : i[1]]
+            temp.sort(key=lambda x:x[1])
+            for temp_c in range(len(temp)):
+                temp[temp_c][1] = temp_c
+            final_out.append(temp)
+            # print('{} {} {}'.format(dx_point, i, temp))
+            i[1]+=1
+    # for i in range(len(final_out)):
+    #     print(final_out[i], '\n')
+    f = open(r'./finalfile.txt', 'w')
+    for i in range(len(final_out)):
+        for m in range(len(final_out[i])):
+            f.write('{:>2d} '.format(final_out[i][m][2]))
+        f.write('\n')
+
+if __name__ == "__main__":
+    write_numfile()
+    final_result()
