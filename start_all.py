@@ -1,7 +1,10 @@
-import os
-import pytesseract
+import getnum
+import cutimg
+import getphoto
+from os import system
 
-pytesseract.pytesseract.tesseract_cmd = r"D:/pytesseract/tesseract.exe"
-os.system(r"python ./getphoto.py")
-os.system(r"python ./cutimg.py")
-os.system(r"python ./getnum.py")
+getphoto.img2photo()
+cutimg.crop(cutimg.pos())
+getnum.write_numfile()
+getnum.final_result()
+system('Pause')

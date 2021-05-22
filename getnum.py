@@ -1,6 +1,5 @@
 #3辨識圖片的數字
 import cv2
-from numpy import imag
 import numpy as np
 import pytesseract
 import os
@@ -18,7 +17,6 @@ def numget(img):
 
 def mask(imgpath):
     img = cv2.imread(imgpath)
-    # img = getphoto.greenmask(img)
     return img
 
 def write_numfile():
@@ -39,12 +37,6 @@ def write_numfile():
 
     cv2.waitKey()
     cv2.destroyAllWindows()
-
-def transpose(matrix):
-    return zip(*matrix)
-def printMatrix(matrix):
-    for row in  matrix:
-        print(' '.join( str(i) for i in row))
 
 def final_result():
     f = open(r'./result.txt')
@@ -92,6 +84,7 @@ def final_result():
             final_out.append(temp)
             # print('{} {} {}'.format(dx_point, i, temp))
             i[1]+=1
+
     # for i in range(len(final_out)):
     #     print(final_out[i], '\n')
     f = open(r'./finalfile.txt', 'w')
@@ -99,6 +92,7 @@ def final_result():
     for i in range(len(final_out)):
         for m in range(len(final_out[i])):
             transpose_final_out[i][m] = final_out[i][m][2]
+
     # print(transpose(transpose_final_out))
     transpose_final_out = transpose(transpose_final_out)
     # print(transpose_final_out)

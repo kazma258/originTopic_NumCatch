@@ -1,18 +1,7 @@
 #1圖片轉尋找框
 import cv2
 import numpy as np
-from numpy.core.fromnumeric import compress
 
-
-def greenmask(image):
-    # Green濾鏡
-    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    lower_green = np.array([30, 43, 46])
-    upper_green = np.array([50, 255, 255])
-    mask = cv2.inRange(hsv, lower_green, upper_green)
-    green = cv2.bitwise_and(image, image, mask=mask)
-    # green = cv2.Canny(green, 50, 150) #邊緣偵測
-    return green
 
 def show_photo(win_name, img):
     cv2.namedWindow(win_name, 0)
@@ -42,9 +31,9 @@ def imgtreat(img):
     # print(len(cnts))
     return cnts
 
-if __name__ == '__main__':
-    img = cv2.imread(r"./Testdata/testmodle4.png")
-    # img = greenmask(img)
+def img2photo():
+    print("輸入讀取的圖片路徑")
+    img = cv2.imread(input())
     # show_photo('mask', img)
     cnts = imgtreat(img)
     txt_file = open('./contours.txt', 'w')
@@ -60,3 +49,6 @@ if __name__ == '__main__':
 
     cv2.waitKey()
     cv2.destroyAllWindows()
+
+if __name__ == '__main__':
+    img2photo()
