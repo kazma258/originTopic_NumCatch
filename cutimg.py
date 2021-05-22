@@ -27,7 +27,7 @@ def crop(pos):
         y = int(pos[i][1])+15
         w = int(pos[i][6])-15
         h = int(pos[i][7])-15
-        print('{} {} {} {}'.format(x, y, w, h))
+        # print('{} {} {} {}'.format(x, y, w, h))
         crop_img = img[y:h, x:w]
         write_name = r'./Numdata/' + str(x)+','+str(y)+'.jpg'
         cv2.imwrite(write_name,  crop_img)

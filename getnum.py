@@ -1,8 +1,7 @@
 #3辨識圖片的數字
-from re import T
-from tempfile import tempdir
 import cv2
 from numpy import imag
+import numpy as np
 import pytesseract
 import os
 import getphoto
@@ -41,11 +40,12 @@ def write_numfile():
     cv2.waitKey()
     cv2.destroyAllWindows()
 
-class num_Map:
-    def __init__(self, x, y, num):
-        self.x = x
-        self.y = y
-        self.num = num
+def transpose(matrix):
+    return zip(*matrix)
+def printMatrix(matrix):
+    for row in  matrix:
+        print(' '.join( str(i) for i in row))
+
 def final_result():
     f = open(r'./result.txt')
     data = f.read().splitlines()
@@ -95,10 +95,20 @@ def final_result():
     # for i in range(len(final_out)):
     #     print(final_out[i], '\n')
     f = open(r'./finalfile.txt', 'w')
+    transpose_final_out = [[0]*3 for i in range(4)]
     for i in range(len(final_out)):
         for m in range(len(final_out[i])):
-            f.write('{:>2d} '.format(final_out[i][m][2]))
+            transpose_final_out[i][m] = final_out[i][m][2]
+    # print(transpose(transpose_final_out))
+    transpose_final_out = transpose(transpose_final_out)
+    # print(transpose_final_out)
+    for i in range(len(transpose_final_out)):
+        for m in range(len(transpose_final_out[i])):
+            f.write('{:>3d}'.format((transpose_final_out[i][m])))
         f.write('\n')
+
+def transpose(matrix): 
+    return [[i[j] for i in matrix] for j in range(0, len(matrix[0]))]
 
 if __name__ == "__main__":
     write_numfile()
